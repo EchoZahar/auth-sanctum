@@ -3,14 +3,20 @@
 namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\API\BaseController;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Services\Auth\AuthLoggerService;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Password;
 
 class ResetPasswordController extends BaseController
 {
+    /**
+     * Сброс пароля пользователя.
+     *
+     * @param AuthLoggerService $log
+     * @return JsonResponse
+     * @api {post} /api/reset Request email
+     */
     public function resetPassword(AuthLoggerService $log)
     {
         $credentials = request()->validate(['email' => 'required|email']);
@@ -20,6 +26,15 @@ class ResetPasswordController extends BaseController
         return $this->sendResponse($response, 'Ссылка с токеном отправлена !');
     }
 
+    /**
+     * Проверка ссылки на сброс пароля.
+     * (не закончено проверить токен и назначить новый при необходимости)
+     *
+     * @param ResetPasswordRequest $request
+     * @param AuthLoggerService $log
+     * @return JsonResponse
+     * @api {post} /api/reset Request user, password
+     */
     public function resetCheck(ResetPasswordRequest $request, AuthLoggerService $log)
     {
         $reset_status = Password::reset($request->validated(), function ($user, $password) {
@@ -29,7 +44,7 @@ class ResetPasswordController extends BaseController
         if ($reset_status == Password::INVALID_TOKEN) {
             return $this->sendError('что то пошло не так, токен не валидный');
         }
-        // удалить токен авторизаций и назначить новый токен
+        // удалить токен авторизаций и назначить новый токен и записать в лог
         $response = [
             'user' => $request->user()
         ];
