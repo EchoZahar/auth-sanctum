@@ -11,31 +11,35 @@ class AuthLoggerService
      *
      * @param $user
      * @param $token
+     * @param $expired_at
      * @param $userAgent
      * @param $ip
      */
-    function writeSignInLog($user, $token, $userAgent, $ip)
+    function writeSignInLog($user, $token, $expired_at, $userAgent, $ip)
     {
         info('Выполнен вход пользователем email: ' . $user->email .
             ', id: ' . $user->id .
             ', token: ' . $token .
+            ', token expired: ' . $expired_at .
             ', user agent: ' . $userAgent .
             ', IP: ' . $ip . '.'
         );
     }
 
     /**
-     * Логирование регистраций пользователей
+     * Логирование регистрации пользователей
      *
      * @param $user
      * @param $token
+     * @param $expired_at
      * @param $userAgent
      * @param $ip
      */
-    function writeSignUpLog($user, $token, $userAgent, $ip)
+    function writeSignUpLog($user, $token, $expired_at,  $userAgent, $ip)
     {
         info('Регистрация нового пользователя email: ' . $user->email . ', id: ' . $user->id .
             ', token: ' . $token .
+            ', token expired: ' . $expired_at .
             ', user agent: ' . $userAgent .
             ', IP: ' . $ip . '.'
         );
@@ -56,14 +60,16 @@ class AuthLoggerService
      *
      * @param $email
      * @param $token
+     * @param $expired_at
      * @param $userAgent
      * @param $ip
      */
-    function refreshToken($email, $token, $userAgent, $ip)
+    function refreshToken($email, $token, $expired_at, $userAgent, $ip)
     {
         info('Обновлен токен пользователя: ' . $email .
             ', токен: ' . $token .
-            ', user agent: ' . $userAgent .
+            ', token expired: ' . $expired_at .
+            ', данные user agent обновивщего токен пользователя: ' . $userAgent .
             ', ip пользователя: ' . $ip . '.'
         );
     }
@@ -72,26 +78,32 @@ class AuthLoggerService
      * все попытки сброса пароля
      *
      * @param $email
-     * @param $url
+     * @param $userAgent
+     * @param $ip
      */
-    function resetPassword($email, $url)
+    function resetPassword($email, $userAgent, $ip)
     {
         info('Сброс пароля, отправлена ссылка на email:
-            ' . $email . ', route: ' . $url . '.'
+            ' . $email .
+            ', данные user agent обновивщего токен пользователя: ' . $userAgent .
+            ', ip пользователя: ' . $ip . '.'
         );
     }
 
     /**
      * Проверка на сброс
+     *
      * @param $email
      * @param $token
+     * @param $expired_at
      * @param $userAgent
      * @param $ip
      */
-    function resetChecked($email, $token, $userAgent, $ip)
+    function resetChecked($email, $token, $expired_at, $userAgent, $ip)
     {
         info('Обновлен пароль пользователя email: ' . $email .
             ', токен: ' . $token .
+            ', token expired: ' . $expired_at .
             ', user agent: ' . $userAgent .
             ', ip пользователя: ' . $ip . '.'
         );

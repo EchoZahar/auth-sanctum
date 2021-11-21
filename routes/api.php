@@ -19,10 +19,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', [LoginController::class, 'signIn']);
+Route::post('/login', [LoginController::class, 'signIn'])->name('login');
 Route::post('/register', [RegisterController::class, 'signUp']);
 Route::post('/reset', [ResetPasswordController::class, 'resetPassword']);
-Route::post('/reset/check', [ResetPasswordController::class, 'resetCheck']);
+//Route::post('/reset/check', [ResetPasswordController::class, 'resetCheck'])->name('reset.check');
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('/user', function(Request $request) {
