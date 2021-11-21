@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class ChangeColumnTableToPersonalAccessTokens extends Migration
 {
     /**
+     * Увеличение поля таблицы token c 60 до 150.
+     * Добавил поле expired_at для хранения срока истечения токена.
      * Run the migrations.
      *
      * @return void

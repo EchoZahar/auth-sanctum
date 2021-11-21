@@ -3,15 +3,34 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\CanResetPassword;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\NewAccessToken;
 
 class User extends Authenticatable implements CanResetPassword
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * Переиспользоване метода трейта HasApiTokens, увеличение длины токена.
+     *
+     * @param  string  $name
+     * @param  array  $abilities
+     * @return \Laravel\Sanctum\NewAccessToken
+     */
+    public function createToken(string $name, array $abilities = ['*'])
+    {
+        $token = $this->tokens()->create([
+            'name' => $name,
+            'token' => hash('sha256', $plainTextToken = Str::random(100)),
+            'abilities' => $abilities,
+        ]);
+//        $token->expired_at = Carbon::now()->addMinutes(30);
+        return new NewAccessToken($token, $token->getKey().'|'.$plainTextToken, $token['expired_at'] = now()->addMinutes(30));
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +38,6 @@ class User extends Authenticatable implements CanResetPassword
      * @var string[]
      */
     protected $fillable = [
-//        'name',
         'email',
         'password',
     ];

@@ -22,6 +22,7 @@ class LogoutController extends BaseController
     public function logout(AuthLoggerService $log)
     {
         $log->writeLogoutLog(auth()->user()->email);
+        // currentAccessToken
         auth()->user()->currentAccessToken()->delete();
         return response(['messsage' => 'пользователь вышел, токен удален !'], 200);
     }

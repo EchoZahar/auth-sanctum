@@ -8,9 +8,9 @@
     <title>Сброс пароля</title>
 </head>
 <body>
-<form class="form-container" action="api/reset/check" method="POST">
+<form class="form-container" action="{{ url('reset/check') }}" method="POST">
     <h2>восстановить пароль ?</h2>
-
+    @csrf
     <input type="email" name="email" value="{{ request()->get('email') }}">
     <input type="password" name="password" placeholder="введите новый пароль">
     <input type="password" name="password_confirmation" placeholder="подтвертдите введеный пароль">
