@@ -25,7 +25,7 @@ class ResetPasswordController extends BaseController
         }
         $user = User::where('email', $credentials)->first();
         if (!$user) {
-            return $this->sendError('пользователя не найдено !');
+            return $this->sendError('пользователь не найден !');
         }
         Password::sendResetLink($credentials);
         $log->resetPassword(request()->email, request()->server('HTTP_USER_AGENT'), request()->ip());

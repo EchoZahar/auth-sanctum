@@ -26,3 +26,9 @@ Content-Type: application/x-www-form-urlencoded
 POST http://vmstudio.local/api/logout
 Accept: application/json
 Authorization: Bearer 45|4LWX3p3Y65vgfRsCGcSHwJtST8qHYR6HRmWWsUimJCAAj6HeN82TByQe0pGvVBImZHFCCj2gfKp3B0RTgj7O8ocoj95u2cL24yCE
+
+### сброс пароля, укажите email
+
+POST http://vmstudio.local/api/reset?email=kprosacco@example.com
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
