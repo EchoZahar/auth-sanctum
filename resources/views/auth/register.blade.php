@@ -10,7 +10,7 @@
 <body>
 <form action="{{ url('api/register') }}" method="post">
     @csrf
-    <input type="email" name="email" placeholder="inter email">
+    <input type="email" name="email" placeholder="inter email" value="{{ old('email') }}">
     <input type="password" name="password" placeholder="inter you password">
     <input type="password" name="password_confirmation" placeholder="confirm you password">
     <button type="submit">submit</button>

@@ -1,8 +1,8 @@
 <?php
 
-
 namespace App\Services\Auth;
 
+use Illuminate\Support\Facades\Log;
 
 class AuthLoggerService
 {
@@ -17,7 +17,7 @@ class AuthLoggerService
      */
     function writeSignInLog($user, $token, $expired_at, $userAgent, $ip)
     {
-        info('Выполнен вход пользователем email: ' . $user->email .
+        Log::info('Выполнен вход пользователем email: ' . $user->email .
             ', id: ' . $user->id .
             ', token: ' . $token .
             ', token expired: ' . $expired_at .
@@ -37,7 +37,7 @@ class AuthLoggerService
      */
     function writeSignUpLog($user, $token, $expired_at,  $userAgent, $ip)
     {
-        info('Регистрация нового пользователя email: ' . $user->email . ', id: ' . $user->id .
+        Log::info('Регистрация нового пользователя email: ' . $user->email . ', id: ' . $user->id .
             ', token: ' . $token .
             ', token expired: ' . $expired_at .
             ', user agent: ' . $userAgent .
@@ -52,7 +52,7 @@ class AuthLoggerService
      */
     function writeLogoutLog($email)
     {
-        info('Пользователь вышел: ' . $email);
+        Log::info('Пользователь вышел: ' . $email);
     }
 
     /**
@@ -66,7 +66,7 @@ class AuthLoggerService
      */
     function refreshToken($email, $token, $expired_at, $userAgent, $ip)
     {
-        info('Обновлен токен пользователя: ' . $email .
+        Log::info('Обновлен токен пользователя: ' . $email .
             ', токен: ' . $token .
             ', token expired: ' . $expired_at .
             ', данные user agent обновивщего токен пользователя: ' . $userAgent .
@@ -83,7 +83,7 @@ class AuthLoggerService
      */
     function resetPassword($email, $userAgent, $ip)
     {
-        info('Сброс пароля, отправлена ссылка на email:
+        Log::info('Сброс пароля, отправлена ссылка на email:
             ' . $email .
             ', данные user agent обновивщего токен пользователя: ' . $userAgent .
             ', ip пользователя: ' . $ip . '.'
@@ -101,7 +101,7 @@ class AuthLoggerService
      */
     function resetChecked($email, $token, $expired_at, $userAgent, $ip)
     {
-        info('Обновлен пароль пользователя email: ' . $email .
+        Log::info('Обновлен пароль пользователя email: ' . $email .
             ', токен: ' . $token .
             ', token expired: ' . $expired_at .
             ', user agent: ' . $userAgent .
