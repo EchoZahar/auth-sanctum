@@ -28,7 +28,6 @@ class User extends Authenticatable implements CanResetPassword
             'token' => hash('sha256', $plainTextToken = Str::random(100)),
             'abilities' => $abilities,
         ]);
-//        $token->expired_at = Carbon::now()->addMinutes(30);
         return new NewAccessToken($token, $token->getKey().'|'.$plainTextToken, $token['expired_at'] = now()->addMinutes(30));
     }
 

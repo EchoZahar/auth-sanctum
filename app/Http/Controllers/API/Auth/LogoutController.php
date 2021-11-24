@@ -13,7 +13,7 @@ class LogoutController extends BaseController
     /**
      * Выход пользователя.
      *
-     * @param AuthLoggerService $log
+     * @param AuthLoggerService $log записать в файл о выходе пользователя из системы
      * @return Application
      * @return ResponseFactory
      * @return Response
@@ -22,7 +22,6 @@ class LogoutController extends BaseController
     public function logout(AuthLoggerService $log)
     {
         $log->writeLogoutLog(auth()->user()->email);
-        // currentAccessToken
         auth()->user()->currentAccessToken()->delete();
         return response(['messsage' => 'пользователь вышел, токен удален !'], 200);
     }

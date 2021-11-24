@@ -1,0 +1,13 @@
+### Проверка токена (токен действует 30мин)
+
+GET http://vmstudio.local/api/check?token=44|8toeH22CBfgHvsi04W9EVh5CMI8Qzf0NM02cRyrYGazNU9x1NQLuw6cIifMJM1RqskTlXR1M0yDuiK09BiQYqJUTBHfdCQFsiKoY
+Accept: application/json
+Authorization: Bearer 44|8toeH22CBfgHvsi04W9EVh5CMI8Qzf0NM02cRyrYGazNU9x1NQLuw6cIifMJM1RqskTlXR1M0yDuiK09BiQYqJUTBHfdCQFsiKoY
+Content-Type: application/x-www-form-urlencoded
+
+### обновление токена по указать id обновляемого токена, и bearer токен обновляющего.
+
+POST http://vmstudio.local/api/refresh?token_id=
+Accept: application/json
+Authorization: Bearer 44|8toeH22CBfgHvsi04W9EVh5CMI8Qzf0NM02cRyrYGazNU9x1NQLuw6cIifMJM1RqskTlXR1M0yDuiK09BiQYqJUTBHfdCQFsiKoY
+Content-Type: application/x-www-form-urlencoded

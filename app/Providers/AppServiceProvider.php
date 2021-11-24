@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use Carbon\Carbon;
-use Illuminate\Support\ServiceProvider;
 use App\Models\PersonalAccessToken;
+use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
+use Laravel\Telescope\Telescope;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Telescope::ignoreMigrations();
     }
 
     /**
@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Регистрация расширяемой модели PersonalAccessToken в которой указывается длина токена.
+        // Расширение класса
         Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
         // Установка время жизни токена 30 мин, после истечения 30 минут становится не действительным.
         Sanctum::authenticateAccessTokensUsing(
@@ -34,7 +34,6 @@ class AppServiceProvider extends ServiceProvider
                 if (!$accessToken->can('limited:token')) {
                     return $is_valid;
                 }
-//                $accessToken->expired_at = $accessToken->created_at->addMinutes(30);
                 return $is_valid && $accessToken->created_at->gt(now()->subMinutes(30));
             }
         );

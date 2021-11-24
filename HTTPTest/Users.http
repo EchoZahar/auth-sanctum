@@ -1,0 +1,28 @@
+### получить пользователя подставить полученый токен из log
+
+GET http://vmstudio.local/api/user
+Accept: application/json
+Authorization: Bearer 44|8toeH22CBfgHvsi04W9EVh5CMI8Qzf0NM02cRyrYGazNU9x1NQLuw6cIifMJM1RqskTlXR1M0yDuiK09BiQYqJUTBHfdCQFsiKoY
+
+### получить пользователей
+
+GET http://vmstudio.local/api/users
+Accept: application/json
+
+### регистрация email, password, password_confirmation
+
+POST http://vmstudio.local/api/register?email=user@example.com&password=password&password_confirmation=password
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+### авторизация email, password
+
+POST http://vmstudio.local/api/login?email=kprosacco@example.com&password=password
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+### выход пользователя
+
+POST http://vmstudio.local/api/logout
+Accept: application/json
+Authorization: Bearer 45|4LWX3p3Y65vgfRsCGcSHwJtST8qHYR6HRmWWsUimJCAAj6HeN82TByQe0pGvVBImZHFCCj2gfKp3B0RTgj7O8ocoj95u2cL24yCE

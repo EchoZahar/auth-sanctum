@@ -5,7 +5,7 @@ use App\Http\Controllers\API\Auth\LogoutController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Auth\TokenController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\Users\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,15 +19,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', [LoginController::class, 'signIn'])->name('login');
+Route::post('/login', [LoginController::class, 'signIn']);
 Route::post('/register', [RegisterController::class, 'signUp']);
 Route::post('/reset', [ResetPasswordController::class, 'resetPassword']);
-//Route::post('/reset/check', [ResetPasswordController::class, 'resetCheck'])->name('reset.check');
 
-Route::group(['middleware' => ['auth:sanctum']], function() {
-    Route::get('/user', function(Request $request) {
-        return response()->json(['user' => $request->user()]);
-    });
+Route::get('/users', [UsersController::class, 'index']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/user', [UsersController::class, 'show']);
     Route::post('/logout', [LogoutController::class, 'logout']);
     Route::get('/check', [TokenController::class, 'checkToken']);
     Route::post('/refresh', [TokenController::class, 'refreshToken']);

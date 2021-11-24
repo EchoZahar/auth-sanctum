@@ -16,14 +16,13 @@ class TokenController extends BaseController
     /**
      * Проверка токена пользователя
      *
-     * @param PersonalAccessToken $token
+     * @param PersonalAccessToken $token проверка строки
      * @param CheckTokenRequest $request
      * @return boolean
      * @api {get} /api/check Request user token
      */
     public function checkToken(PersonalAccessToken $token, CheckTokenRequest $request)
     {
-        // проверка строки
         $accessToken = $token->findLimitToken($request->token);
         if ($accessToken) {
             return true; // вернет 1
@@ -34,7 +33,7 @@ class TokenController extends BaseController
     /**
      * Обновление токена пользователя
      *
-     * @param RefreshTokenRequest $request
+     * @param RefreshTokenRequest $request по id получаю токен
      * @param AuthLoggerService $log
      * @param ExpiredAtToken $expired
      * @return JsonResponse
@@ -42,19 +41,16 @@ class TokenController extends BaseController
      */
     public function refreshToken(RefreshTokenRequest $request, AuthLoggerService $log, ExpiredAtToken $expired)
     {
-        // по id получаю токен
         $token = PersonalAccessToken::where('id', $request->token_id)->first();
         if (!$token) {
             return $this->sendError('token not found', 404);
         }
-        // по полученому токену из таблицы получаю пользователя
         $user = User::where('id', $token->tokenable_id)->first();
-        // если нет полбзователя возвращаю ошибку
         if (!$user) {
             return $this->sendError('user not found', 404);
         }
-        // удаление текущего токена
         $user->tokens()->where('id', $token->id)->delete();
+        //
 //        $user->currentAccessToken()->delete();
         // назначить полученому пользователю новый токен
         $token = $user->createToken(config('app.name'), ['limited:token'])->plainTextToken;
